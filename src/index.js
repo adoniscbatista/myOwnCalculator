@@ -46,18 +46,11 @@ buttons.forEach((buttons) => {
       buttonValue === "/"
     ) {
       currentValueElement.textContent = buttonValue;
-    } 
-    
-    //Arrumar o botão "+/-"
-    else if (buttonValue === "+/-") {
-      const currentValue = parseFloat(currentValueElement.textContent);
-      if (!isNaN(currentValue) && currentValue !== 0) {
-        currentValueElement.textContent = (currentValue * -1).toString();
-        
-
-        const lastIndex = clickedButtonsArray.length - 1;
-        clickedButtonsArray[lastIndex] = currentValueElement.textContent;
-      }
+    } else if (buttonValue === "+/-") {
+      clickedButtonsArray = clickedButtonsArray.slice(0, -3);
+      const toggleSign = currentValueElement.textContent * -1
+      currentValueElement.textContent = toggleSign
+      clickedButtonsArray.push(toggleSign)
     } else {
       currentValueElement.textContent += buttonValue;
       console.log("Pressed button: ", buttonValue);
@@ -95,3 +88,10 @@ buttonsEffect.forEach((button) => {
     }, 100);
   });
 });
+
+function simulateButtonClick(buttonValue) {
+  const button = document.querySelector(`#${buttonValue}`);
+  if (button) {
+    button.click();
+  }
+}
