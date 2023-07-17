@@ -1,0 +1,21 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "build": "webpack"
+  },
+  "author": "Adonis Batista",
+  "license": "ISC",
+  "dependencies": {
+    "mathjs": "^11.8.2",
+    "tailwindcss": "^3.3.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
