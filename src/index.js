@@ -16,11 +16,21 @@ buttons.forEach((buttons) => {
     console.log(buttonValue);
 
     if (currentValueElement.textContent === "0") {
-      currentValueElement.textContent = buttonValue;
+      currentValueElement.textContent = buttonValue;      
       if (buttonValue === ".") {
         currentValueElement.textContent = "0.";
         clickedButtonsArray = ["0."];
-      } else if (buttonValue === "AC" || buttonValue === "⌫") {
+      } else if (buttonValue === "AC" || buttonValue === "Backspace") {
+        clickedButtonsArray = [];
+        currentValueElement.textContent = "0";
+      } else if (
+        buttonValue === "+" ||
+        buttonValue === "-" ||
+        buttonValue === "*" ||
+        buttonValue === "/" ||
+        buttonValue === "%" ||
+        buttonValue === "+/-"
+      ) {
         clickedButtonsArray = [];
         currentValueElement.textContent = "0";
       }
@@ -48,9 +58,9 @@ buttons.forEach((buttons) => {
       currentValueElement.textContent = buttonValue;
     } else if (buttonValue === "+/-") {
       clickedButtonsArray = clickedButtonsArray.slice(0, -3);
-      const toggleSign = currentValueElement.textContent * -1
-      currentValueElement.textContent = toggleSign
-      clickedButtonsArray.push(toggleSign)
+      const toggleSign = currentValueElement.textContent * -1;
+      currentValueElement.textContent = toggleSign;
+      clickedButtonsArray.push(toggleSign);
     } else {
       currentValueElement.textContent += buttonValue;
       console.log("Pressed button: ", buttonValue);
@@ -89,9 +99,58 @@ buttonsEffect.forEach((button) => {
   });
 });
 
-function simulateButtonClick(buttonValue) {
-  const button = document.querySelector(`#${buttonValue}`);
-  if (button) {
-    button.click();
+// Modificações. Adicionar teclado. 19/07/23
+
+document.addEventListener("keydown", (event) => {
+  const keydown = event.key;
+  
+  if (currentValueElement.textContent === "0") {
+    clickedButtonsArray.push(keydown)
+    if (keydown === "0") {
+      currentValueElement.textContent = "0";           
+      console.log("keypressed:", keydown);
+    } else if (keydown === ".") {
+      currentValueElement.textContent = "0.";
+      clickedButtonsArray = ["0."];
+    } else if (
+      keydown === "+" ||
+      keydown === "-" ||
+      keydown === "*" ||
+      keydown === "/" ||
+      keydown === "%" ||
+      keydown === "Backspace"
+    ) {
+      clickedButtonsArray = [];
+      currentValueElement.textContent = "0";
+      console.log("keypressed: ", keydown)
+    } else {
+      currentValueElement.textContent = keydown;
+    }
+  } else if (
+    keydown === "0" ||
+    keydown === "1" ||
+    keydown === "2" ||
+    keydown === "3" ||
+    keydown === "4" ||
+    keydown === "5" ||
+    keydown === "6" ||
+    keydown === "7" ||
+    keydown === "8" ||
+    keydown === "9" ||
+    keydown === "+" ||
+    keydown === "-" ||
+    keydown === "*" ||
+    keydown === "/" ||
+    keydown === "." ||
+    keydown === "%"
+  ) {
+    clickedButtonsArray.push(keydown);
+    currentValueElement.textContent += keydown;
+    console.log(keydown, clickedButtonsArray);
+  } else if (
+    keydown === "Enter"
+  ) {
+    const clickEvent = new Event("click");
+    equalButton.dispatchEvent(clickEvent)
   }
-}
+});
